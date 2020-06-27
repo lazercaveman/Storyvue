@@ -1,0 +1,97 @@
+// Font Specific
+
+=interact
+  &:hover, &:active, &:focus
+      @content
+
+=fontset( $variant )
+  @if $variant == regular-12
+    font-family: $OpenSans
+    font-size: fontSize(12)
+    font-weight: fontWeight(regular)
+    line-height: 17px
+    letter-spacing: 0.4px
+  @if $variant == regular-16
+    font-family: $OpenSans
+    font-size: fontSize(16)
+    font-weight: fontWeight(regular)
+    line-height: 22px
+    letter-spacing: 0.15px
+  @if $variant == bold-16
+    font-family: $OpenSans
+    font-size: fontSize(16)
+    font-weight: fontWeight(bold)
+    line-height: 22px
+    letter-spacing: 0.15px
+  @if $variant == regular-20
+    font-family: $OpenSans
+    font-size: fontSize(20)
+    font-weight: fontWeight(regular)
+    line-height: 27px
+    letter-spacing: 0
+  @if $variant == bold-20
+    font-family: $OpenSans
+    font-size: fontSize(20)
+    font-weight: fontWeight(bold)
+    line-height: 27px
+    letter-spacing: 0
+
+
+// media querries
+
+=breakingPoint( $setsize )
+  @media screen and ( min-width: $setsize )
+    @content
+
+=specificBrowserFix($browser)
+  @if $browser == ie11
+    @media all and (-ms-high-contrast:none)
+      @content
+  @if $browser == edge
+    @supports (-ms-ime-align:auto)
+      @content
+  @if $browser == safari12
+    _::-webkit-full-page-media, _:future, :root .safari_only
+      @content
+
+
+// Custom Proerties
+
+=flexGap( $gap, $direction: row, $element: div )
+  > #{$element}
+    @if $direction == row
+      margin: 0 $gap/2
+      &:first-child
+        margin-left: 0
+      &:last-child
+        margin-right: 0
+    @if $direction == column
+      margin: $gap/2 0
+      &:first-child
+        margin-top: 0
+      &:last-child
+        margin-bottom: 0
+
+
+// scrollbar styling 
+
+$scrollBarSize: 3px
+=customScrollBar
+  &::-webkit-scrollbar
+    width: $scrollBarSize
+  &::-webkit-scrollbar-thumb // Schieberegler
+    background-color: color(black)
+    border-radius: $scrollBarSize/2
+  &::-webkit-scrollbar-button // Die Pfeil-Buttons oben und unten
+    height: 100%
+  &::-webkit-scrollbar-track // Bereich für den Schieberegler
+    background-color: color(black, .2)
+
+
+// Developer tools
+=mark
+  background: #dc0839
+=mark2
+  background: #08dc7a
+=mark3
+  background: #088edc

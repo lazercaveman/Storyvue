@@ -1,0 +1,131 @@
+// Color Set
+@function color( $variant, $opacity: 1 )
+  @if $variant == black
+    @return hsla(0, 0%, 0%, $opacity )
+  @if $variant == white
+    @return hsla( 0, 100%, 100%, $opacity )
+  @if $variant == gray-1
+    @return #EFF0F3
+  @if $variant == gray-2
+    @return #d4d4d4
+  @if $variant == gray-3
+    @return hsla(0, 0%, 53%, 1)
+  @if $variant == primary
+    @return #421B6C
+  @if $variant == secondary
+    @return #2ADDB1
+  @if $variant == accent
+    @return #DE851F
+  @if $variant == alert
+    @return #DE3553
+  @if $variant == unset
+    @return unset
+  @else 
+    @error "A variant with name "#{$variant}" does not exist inside of color()"
+
+
+// Fonts
+@function fontWeight( $variant )
+  @if $variant == regular
+    @return 400
+  @if $variant == bold
+    @return 700
+
+@function fontSize( $variant )
+  @if $variant == 20
+    @return 20px
+  @if $variant == 16
+    @return 16px
+  @if $variant == 12
+    @return 12px
+  @else 
+    @error "A size of "#{$size}" does not exist inside of fontSize()"
+
+
+// Grid setup
+
+$columnGap: 20px
+$columnWidth: 50px
+$columnsQuantity: 16
+
+$gridSetup: ("columnsQuantity": $columnsQuantity, columnsWidth: $columnWidth, columnsGap: $columnGap)
+
+@function gridColumnGap()
+  @return $columnGap
+
+// The grid function can be used to set width values based on the grid columns width ($gridColumnWidth) and the grid gap ($gridGap)
+@function gridColumns( $selectedGrids )
+  // loop trhough each grid column
+  @for $i from 1 through map-get($gridSetup, "columnsQuantity")
+    // setup function properties/selectors
+    @if $selectedGrids == $i
+      // calculating width based 
+      $includedColumsWidth: $i * map-get($gridSetup, "columnsWidth") + ($i - 1) * map-get($gridSetup, "columnsGap")
+      @return $includedColumsWidth
+      // Return full grid columns
+    @if $selectedGrids == all
+      // calculating full width of all columns including gaps
+      $includedColumsWidth: map-get($gridSetup, "columnsQuantity") * (map-get($gridSetup, "columnsWidth") + map-get($gridSetup, "columnsGap")) - map-get($gridSetup, "columnsGap")
+      @return $includedColumsWidth
+    @else if $selectedGrids > map-get($gridSetup, "columnsQuantity")
+      @error "The grid contains #{map-get($gridSetup, "columnsQuantity")} columns only"
+
+
+// Sizes
+@function px( $variant )
+  @if $variant == 75
+    @return 75px
+  @if $variant == 60
+    @return 60px
+  @if $variant == 50
+    @return 50px
+  @if $variant == 40
+    @return 40px
+  @if $variant == 30
+    @return 30px
+  @if $variant == 25
+    @return 25px
+  @if $variant == 20
+    @return 20px
+  @if $variant == 10
+    @return 10px
+  @if $variant == 5
+    @return 5px
+  @else 
+    @error "A variant with name "#{$variant}" does not exist inside of px()"
+
+@function gap( $variant )
+  @if $variant == 40
+    @return 40px
+  @if $variant == 25
+    @return 25px
+  @if $variant == 20
+    @return 20px
+  @if $variant == 10
+    @return 10px
+  @if $variant == 5
+    @return 5px
+  @else 
+    @error "A variant with name "#{$variant}" does not exist inside of gap()"
+
+
+// radius
+@function radius( $variant )
+  @if $variant == 5
+    @return 5px
+  @if $variant == 25
+    @return 25px
+  @if $variant == 50
+    @return 50px
+  @if $variant == full
+    @return 50%
+  @else 
+    @error "A variant with name "#{$variant}" does not exist inside of radius()"
+
+
+// Shadows, Gradients, Filters & Effects
+@function linearGradient( $variant )
+  @if $variant == primary
+    @return linear-gradient(104deg, #421B6C, #4E059E)
+  @else 
+    @error "A variant with name "#{$variant}" does not exist inside of linearGradient()"
