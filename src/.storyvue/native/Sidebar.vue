@@ -3,40 +3,25 @@
   #storyvue-sidebar
     ul
       li(
-        v-for="item in items"
+        v-for="item in storyItems"
         )
         router-link(
           :to="item.path"
-          ) {{item.path}}
+          ) {{item.name}}
 
 </template>
 
 
 <script>
 
+// Import Libraries
+import { mapGetters } from 'vuex';
+
 export default {
-  props: {
-    title: {
-      typeod: String,
-    },
-  },
-  data() {
-    return {
-      items: [],
-    };
-  },
-  mounted() {
-    this.buildSidebarItems();
-  },
-  methods: {
-    buildSidebarItems() {
-      this.$router.options.routes.forEach(route => {
-        this.items.push({
-          name: route.name,
-          path: route.path,
-        });
-      });
-    },
+  computed: {
+    ...mapGetters([
+      'storyItems',
+    ]),
   },
 };
 

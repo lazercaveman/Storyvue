@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import knobs from './modules/knobs';
+import storyvue from './modules/storyvue';
 
 Vue.use(Vuex);
 
@@ -12,6 +12,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    knobs,
+    storyvue,
   },
 });

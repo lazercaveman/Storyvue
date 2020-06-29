@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
+import Store from '@/store/index';
 
 Vue.use(VueRouter);
 
@@ -15,11 +16,12 @@ const stories = require.context(
 function buildRouteObjects() {
   stories.keys().forEach((file) => {
     const RouteFragments = file.split('/');
+    RouteFragments.shift();
     const RouteStages = RouteFragments.length;
-    let PathString = '';
     const FileName = RouteFragments[RouteStages - 1].split('.').slice(0, -1).join('.');
+    let PathString = '';
     RouteFragments.forEach((stage, i) => {
-      if (i !== 0 && i !== RouteStages - 1) {
+      if (i !== RouteStages - 1) {
         PathString = `${PathString}/${stage}`;
       } else if (i === RouteStages - 1) {
         PathString = `${PathString}/${FileName}`;
@@ -28,9 +30,10 @@ function buildRouteObjects() {
     const newRoute = {
       path: PathString.toLowerCase(),
       name: FileName,
-      meta: { stages: PathString },
+      meta: { stages: RouteFragments },
       component: () => import(`../stories${PathString}.vue`),
     };
+    Store.dispatch('updateStoryItems', newRoute);
     routes.push(newRoute);
   });
 } buildRouteObjects();
