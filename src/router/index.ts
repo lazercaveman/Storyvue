@@ -14,24 +14,24 @@ const stories = require.context(
 
 function buildRouteObjects() {
   stories.keys().forEach((file) => {
-    if (file.includes('/', 2)) {
-      const folderName = file.split('.')[1].split('/')[1];
-      const fileName = file.split('.')[1].split('/')[2];
-      const newRoute = {
-        path: `/${folderName}/${fileName}`,
-        name: fileName,
-        component: () => import(`../stories/${folderName}/${fileName}.vue`),
-      };
-      routes.push(newRoute);
-    } else if (file.includes('/', 1)) {
-      const fileName = file.split('.')[1].split('/')[1];
-      const newRoute = {
-        path: `/${fileName}`,
-        name: fileName,
-        component: () => import(`../stories/${fileName}.vue`),
-      };
-      routes.push(newRoute);
-    }
+    const RouteFragments = file.split('/');
+    const RouteStages = RouteFragments.length;
+    let PathString = '';
+    const FileName = RouteFragments[RouteStages - 1].split('.').slice(0, -1).join('.');
+    RouteFragments.forEach((stage, i) => {
+      if (i !== 0 && i !== RouteStages - 1) {
+        PathString = `${PathString}/${stage}`;
+      } else if (i === RouteStages - 1) {
+        PathString = `${PathString}/${FileName}`;
+      }
+    });
+    const newRoute = {
+      path: PathString.toLowerCase(),
+      name: FileName,
+      meta: { stages: PathString },
+      component: () => import(`../stories${PathString}.vue`),
+    };
+    routes.push(newRoute);
   });
 } buildRouteObjects();
 
