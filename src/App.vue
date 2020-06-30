@@ -1,7 +1,6 @@
 <template lang="pug">
 
   #app
-    Sidebar
     Stage
 
 </template>
@@ -10,12 +9,10 @@
 <script>
 
 // Components
-import Sidebar from '@/.storyvue/native/Sidebar.vue';
 import Stage from '@/.storyvue/native/Stage.vue';
 
 export default {
   components: {
-    Sidebar,
     Stage,
   },
   data() {
@@ -34,6 +31,5 @@ export default {
 @import @/styles/base
 
 #app
-  display: flex
 
 </style>

@@ -23,6 +23,36 @@ export default {
       'storyItems',
     ]),
   },
+  methods: {
+    assignFirstLevelComponents(pathArray) {
+      return true;
+    },
+    assignSecondLevelComponents(pathArray, returnType) {
+      if (returnType === 'headline') {
+        return pathArray[0];
+      } else {
+        return pathArray[1];
+      }
+    },
+    assignThirdLevelComponents(pathArray, returnType) {
+      if (returnType === 'headline') {
+        return pathArray[0];
+      } else if (returnType === 'subHeadline') {
+        return pathArray[1];
+      } else {
+        return pathArray[2];
+      }
+    },
+    parseStageIndex(pathArray, returnType) {
+      if (pathArray.length === 1) {
+        return this.assignFirstLevelComponents(pathArray, returnType);
+      } else if (pathArray.length === 2) {
+        return this.assignSecondLevelComponents(pathArray, returnType);
+      } else if (pathArray.length === 3) {
+        return this.assignThirdLevelComponents(pathArray, returnType);
+      }
+    },
+  },
 };
 
 </script>
@@ -43,7 +73,6 @@ export default {
   max-width: gridColumns(4)
   height: 100vh
   background-color: color(white)
-  box-shadow: 0 0 px(10) color(black, .05)
   border-right: 1px solid color(gray-1)
   +fontset(regular-16)
 
